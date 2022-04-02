@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: "Source Sans Pro";
+}
+
+.gradient {
+  background: linear-gradient(90deg, #d53369 0%, #e0c485 100%);
+}
