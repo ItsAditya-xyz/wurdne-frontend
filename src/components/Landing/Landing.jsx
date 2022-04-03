@@ -1,9 +1,9 @@
 import React from "react";
 import DeSo from "deso-protocol";
-import Navbar from "./Navbar";
-import landingIllustration from "../assets/landingIllustration.png";
-import revenueSvg from "../assets/revenue.svg";
-import noAds from "../assets/noAds.svg";
+import Navbar from "../Navbar/Navbar";
+import landingIllustration from "../../assets/landingIllustration.png";
+import revenueSvg from "../../assets/revenue.svg";
+import noAds from "../../assets/noAds.svg";
 export default function Landing() {
   const handleLogin = async () => {
     const deso = new DeSo();
@@ -13,7 +13,7 @@ export default function Landing() {
   };
   return (
     <div className='leading-normal tracking-normal text-white gradient'>
-      <Navbar title='Wurdne' />
+      <Navbar title='Wurdne' gradient={true} />
       <div>
         <div className='pt-24'>
           <div className='container px-3 mx-auto flex flex-wrap flex-col md:flex-row items-center'>
@@ -25,7 +25,9 @@ export default function Landing() {
                 Write blog posts to blockchain, share ideas, and connect with
                 the global community without permission!
               </p>
-              <button onClick = {handleLogin} className='mx-auto lg:mx-0 hover:underline bg-white text-gray-800 font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out'>
+              <button
+                onClick={handleLogin}
+                className='mx-auto lg:mx-0 hover:underline bg-white text-gray-800 font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out'>
                 Get Started
               </button>
             </div>
