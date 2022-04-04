@@ -9,3 +9,11 @@ body {
 .gradient {
   background: linear-gradient(90deg, #d53369 0%, #e0c485 100%);
 }
+
+.tab {
+  @apply p-4 hover:text-emerald-500 hover:border-b-emerald-500 border-b-4 duration-300 cursor-pointer;
+}
+
+.tab.active {
+  @apply border-b-emerald-500 text-white bg-emerald-500;
+}
