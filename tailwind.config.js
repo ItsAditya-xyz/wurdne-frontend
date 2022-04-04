@@ -1,7 +1,11 @@
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      minHeight: {
+        "24": "96px"
+      }
+    },
   },
 
   variants: {
