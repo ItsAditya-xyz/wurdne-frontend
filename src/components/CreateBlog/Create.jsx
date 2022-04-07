@@ -30,6 +30,10 @@ export default function Create() {
   const [bodyText, setBodyText] = useState("");
   const [currentTab, setCurrentTab] = useState(0); // 0: Write, 1: Preview, 2: Guide
   const [headDropOpen, setHeadDropOpen] = useState(false);
+  const [coverModalVisible, setCoverModalVisible] = useState(false);
+  const [tagModalVisible, setTagModalVisible] = useState(false);
+  const [postCover, setPostCover] = useState("");
+  const [postTags, setPostTags] = useState([]);
 
   const titleTextArea = useRef(undefined);
   const bodyTextArea = useRef(undefined);
@@ -56,6 +60,35 @@ export default function Create() {
     bodyTextArea.current.focus();
   }
 
+  const onCoverInputChange = e => {
+    let url = URL.createObjectURL(e.target.files[0]);
+    setPostCover(url);
+  }
+
+  const onTagInputChange = e => {
+    const text = e.target.value;
+
+    if (text[text.length - 1] === " ") {
+      let newTag = text.split(" ")[0]
+      setPostTags([...postTags, newTag]);
+      e.target.value = "";
+    }
+  }
+
+  const onInputKeyDown = e => { // Remove Tags
+    if (postTags.length <= 0) return;
+    if (e.code === "Backspace" && e.target.value === "") {
+      let newTags = [...postTags];
+      newTags.splice(newTags.length - 1, 1);
+      setPostTags(newTags);
+    }
+  }
+
+  const onPublishBtnClicked = e => {
+    // Publish
+    console.log("Publishing...");
+    alert("Publishing...Not really");
+  }
 
   // Utility Functions
   const updateHeight = (element, minHeight = 96) => {
@@ -73,10 +106,6 @@ export default function Create() {
     return finalText;
   }
 
-  const openHeadDropdown = e => {
-    setHeadDropOpen(!headDropOpen);
-  }
-
   return (
     <>
       <Navbar title='Wurdne' />
@@ -84,15 +113,15 @@ export default function Create() {
       <div className="mt-24 w-4/5 m-auto px-8 mb-6">
         <div className="flex justify-between">
           <div className="flex gap-4">
-            <button className="p-2 border-emerald-500 border rounded-md duration-300 hover:bg-emerald-500 hover:text-white">
+            <button className="p-2 border-emerald-500 border rounded-md duration-300 hover:bg-emerald-500 hover:text-white" onClick={e => setCoverModalVisible(true)}>
               <i className="far fa-image"></i> Set Cover
             </button>
-            <button className="p-2 border-emerald-500 border rounded-md duration-300 hover:bg-emerald-500 hover:text-white">
+            <button className="p-2 border-emerald-500 border rounded-md duration-300 hover:bg-emerald-500 hover:text-white" onClick={e => setTagModalVisible(true)}>
               <i className="fas fa-hashtag"></i> Add Tags
             </button>
           </div>
           <div className="btns-left">
-            <button className="p-2 border-emerald-500 border rounded-md mx-2 duration-300 hover:bg-emerald-500 hover:text-white">Publish</button>
+            <button className="p-2 border-emerald-500 border rounded-md mx-2 duration-300 hover:bg-emerald-500 hover:text-white" onClick={onPublishBtnClicked}>Publish</button>
           </div>
         </div>
         <div className="flex flex-col mt-6">
@@ -112,22 +141,22 @@ export default function Create() {
             </div>
           </div>
           <div className="text-btns flex gap-4">
-            <div className="flex items-center" onClick={e => openHeadDropdown(e)}>
+            <div className="flex items-center" onClick={e => setHeadDropOpen(!headDropOpen)}>
               <div className="inline-block relative cursor-pointer">
                 <i className="fas fa-heading mr-2"></i>
                 <i className="fas fa-chevron-down"></i>
 
                 <ul className={`absolute ${!headDropOpen && "hidden"}  pt-1`}>
-                <li className="">
-                  <TextBarButton icon="h1" onClickHandler={e => onBarBtnClicked(e, "H1")} />
-                </li>
-                <li className="">
-                    <TextBarButton icon="h2" onClickHandler={e => onBarBtnClicked(e, "H2")} />
-                </li>
-                <li className="">
-                    <TextBarButton icon="h3" onClickHandler={e => onBarBtnClicked(e, "H3")} />
-                </li>
-              </ul>
+                  <li className="">
+                    <TextBarButton icon="h1" onClickHandler={e => onBarBtnClicked(e, "H1")} />
+                  </li>
+                  <li className="">
+                      <TextBarButton icon="h2" onClickHandler={e => onBarBtnClicked(e, "H2")} />
+                  </li>
+                  <li className="">
+                      <TextBarButton icon="h3" onClickHandler={e => onBarBtnClicked(e, "H3")} />
+                  </li>
+                </ul>
               </div>
             </div>
             <TextBarButton icon="bold" onClickHandler={e => onBarBtnClicked(e, "bold")} />
@@ -151,6 +180,44 @@ export default function Create() {
           <ReactMarkdown className="markdown-container unreset" rehypePlugins={[rehypeHighlight]} remarkPlugins={[remarkGfm]}>
             {currentTab == 1 ? bodyText : guideText}
           </ReactMarkdown>
+        </div>
+      </div>
+
+      {/* Modals */}
+      <div className={`absolute top-0 left-0 z-30 w-screen h-screen flex justify-center items-center bg-semi-transparent ${coverModalVisible || tagModalVisible || "hidden"}`}> 
+        <div className={`bg-gray-50 rounded-lg ${!coverModalVisible && "hidden"}`}>
+          <div className="px-8 py-3 text-2xl font-bold border-b border-b-gray-300 bg-gray-300 rounded-t-lg">
+            Set Cover Image
+          </div>
+          <div className="px-8 py-4">
+            <input type="file" accept="image/png, image/jpeg" onChange={onCoverInputChange} />
+            {/* To Do */}
+            <div className="preview w-96">
+              <img src={postCover} alt="Cover Image Preview" className="max-w-96 max-h-96" />
+            </div>
+          </div>
+          <div className="px-8 py-3 text-xl font-bold border-t border-t-gray-300 bg-gray-300 rounded-b-lg flex justify-end gap-2">
+            <button className="px-2 py-1 text-white bg-red-600 border-red-700 hover:bg-red-700 border rounded-lg duration-300" onClick={e => setCoverModalVisible(false)}>Close</button>
+            <button className="px-2 py-1 text-white bg-emerald-600 border-emerald-700 hover:bg-emerald-700 border rounded-lg duration-300" onClick={e => setCoverModalVisible(false)}>Save</button>
+          </div>
+        </div>
+
+        <div className={`bg-gray-50 rounded-lg ${!tagModalVisible && "hidden"}`}>
+          <div className="px-8 py-3 text-2xl font-bold border-b border-b-gray-300 bg-gray-300 rounded-t-lg">
+            Set Tags
+          </div>
+          <div className="px-8 py-4">
+            <label htmlFor="tagInput" className="text-lg">Select Tags: </label>
+            <div className="input-row flex items-center border p-2 rounded-md border-gray-500">
+              {postTags.map((tag, idx) => (<div className="tag-badge" key={idx}>{tag}</div>))}
+              <input type="text" className="w-full no-ring border-0 p-1" onChange={onTagInputChange} onKeyDown={onInputKeyDown} id="tagInput" />
+            </div>
+            
+          </div>
+          <div className="px-8 py-3 text-xl font-bold border-t border-t-gray-300 bg-gray-300 rounded-b-lg flex justify-end gap-2">
+            <button className="px-2 py-1 text-white bg-red-600 border-red-700 hover:bg-red-700 border rounded-lg duration-300" onClick={e => setTagModalVisible(false)}>Close</button>
+            <button className="px-2 py-1 text-white bg-emerald-600 border-emerald-700 hover:bg-emerald-700 border rounded-lg duration-300" onClick={e => setTagModalVisible(false)}>Save</button>
+          </div>
         </div>
       </div>
     </>
