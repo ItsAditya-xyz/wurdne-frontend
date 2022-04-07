@@ -2,6 +2,8 @@ import React, { useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
+
+// Components
 import Navbar from "../Navbar/Navbar";
 import TextBarButton from "./TextBarButton";
 
@@ -27,19 +29,22 @@ export default function Create() {
   const [titleText, setTitleText] = useState("");
   const [bodyText, setBodyText] = useState("");
   const [currentTab, setCurrentTab] = useState(0); // 0: Write, 1: Preview, 2: Guide
+  const [headDropOpen, setHeadDropOpen] = useState(false);
 
   const titleTextArea = useRef(undefined);
   const bodyTextArea = useRef(undefined);
 
+
+  // Event Listeners
   const onTitleChange = e => {
     setTitleText(e.target.value);
     updateHeight(titleTextArea, 50);
-  };
+  }
 
   const onBodyChange = e => {
     setBodyText(e.target.value);
     updateHeight(bodyTextArea, 300); // 296
-  };
+  }
 
   const onBarBtnClicked = (e, actionID) => {
     // Get Selection
@@ -48,8 +53,11 @@ export default function Create() {
     // Add Text to it for the particular button
     let outText = getFormattedString(appendBodyActions[actionID], selectionStart, selectionEnd);
     setBodyText(outText);
-  };
+    bodyTextArea.current.focus();
+  }
 
+
+  // Utility Functions
   const updateHeight = (element, minHeight = 96) => {
     // Change the height of the textarea if the content is larger
     if (element.current.scrollHeight >= minHeight) {
@@ -63,6 +71,10 @@ export default function Create() {
     if (textToAdd[1] === " ") textToAdd[1] = "";
     let finalText = bodyText.substring(0, pointerStart) + textToAdd[0] + bodyText.substring(pointerStart, pointerEnd) + textToAdd[1] + bodyText.substring(pointerEnd);
     return finalText;
+  }
+
+  const openHeadDropdown = e => {
+    setHeadDropOpen(!headDropOpen);
   }
 
   return (
@@ -100,7 +112,24 @@ export default function Create() {
             </div>
           </div>
           <div className="text-btns flex gap-4">
-            <TextBarButton icon="heading" onClickHandler={e => onBarBtnClicked(e, "H1")} />
+            <div className="flex items-center" onClick={e => openHeadDropdown(e)}>
+              <div className="inline-block relative cursor-pointer">
+                <i className="fas fa-heading mr-2"></i>
+                <i className="fas fa-chevron-down"></i>
+
+                <ul className={`absolute ${!headDropOpen && "hidden"}  pt-1`}>
+                <li className="">
+                  <TextBarButton icon="h1" onClickHandler={e => onBarBtnClicked(e, "H1")} />
+                </li>
+                <li className="">
+                    <TextBarButton icon="h2" onClickHandler={e => onBarBtnClicked(e, "H2")} />
+                </li>
+                <li className="">
+                    <TextBarButton icon="h3" onClickHandler={e => onBarBtnClicked(e, "H3")} />
+                </li>
+              </ul>
+              </div>
+            </div>
             <TextBarButton icon="bold" onClickHandler={e => onBarBtnClicked(e, "bold")} />
             <TextBarButton icon="italic" onClickHandler={e => onBarBtnClicked(e, "italic")} />
             <TextBarButton icon="quote-left" onClickHandler={e => onBarBtnClicked(e, "quote")} />
