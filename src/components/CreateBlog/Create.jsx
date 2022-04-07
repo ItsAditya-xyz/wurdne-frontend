@@ -9,6 +9,20 @@ import "highlight.js/styles/atom-one-dark.css";
 
 export default function Create() {
   const guideText = `# Guide is still a WIP!`;
+  const appendBodyActions = {
+    H1: "# || ",
+    H2: "## || ",
+    H3: "### || ",
+    bold: "**||**",
+    italic: "*||*",
+    quote: "\n> || ",
+    code: "\n```\n||```",
+    link: "[||](Link)",
+    embed: "%[||]",
+    list: "\n- || ",
+    "list-ol": "\n1. || ",
+    image: "[!||](Link)"
+  }
 
   const [titleText, setTitleText] = useState("");
   const [bodyText, setBodyText] = useState("");
@@ -27,13 +41,28 @@ export default function Create() {
     updateHeight(bodyTextArea, 300); // 296
   };
 
+  const onBarBtnClicked = (e, actionID) => {
+    // Get Selection
+    let selectionStart = bodyTextArea.current.selectionStart;
+    let selectionEnd = bodyTextArea.current.selectionEnd;
+    // Add Text to it for the particular button
+    let outText = getFormattedString(appendBodyActions[actionID], selectionStart, selectionEnd);
+    setBodyText(outText);
+  };
+
   const updateHeight = (element, minHeight = 96) => {
     // Change the height of the textarea if the content is larger
-    console.log(element.current.scrollHeight, minHeight)
     if (element.current.scrollHeight >= minHeight) {
       element.current.style.height = "1px";
       element.current.style.height = `${element.current.scrollHeight+4}px`;
     }
+  }
+
+  const getFormattedString = (text, pointerStart, pointerEnd) => {
+    let textToAdd = text.split("||");
+    if (textToAdd[1] === " ") textToAdd[1] = "";
+    let finalText = bodyText.substring(0, pointerStart) + textToAdd[0] + bodyText.substring(pointerStart, pointerEnd) + textToAdd[1] + bodyText.substring(pointerEnd);
+    return finalText;
   }
 
   return (
@@ -71,15 +100,15 @@ export default function Create() {
             </div>
           </div>
           <div className="text-btns flex gap-4">
-            <TextBarButton icon="heading" />
-            <TextBarButton icon="bold" />
-            <TextBarButton icon="italic" />
-            <TextBarButton icon="quote-left" />
-            <TextBarButton icon="code" />
-            <TextBarButton icon="brackets-curly" />
-            <TextBarButton icon="list-ul" />
-            <TextBarButton icon="list-ol" />
-            <TextBarButton icon="camera" />
+            <TextBarButton icon="heading" onClickHandler={e => onBarBtnClicked(e, "H1")} />
+            <TextBarButton icon="bold" onClickHandler={e => onBarBtnClicked(e, "bold")} />
+            <TextBarButton icon="italic" onClickHandler={e => onBarBtnClicked(e, "italic")} />
+            <TextBarButton icon="quote-left" onClickHandler={e => onBarBtnClicked(e, "quote")} />
+            <TextBarButton icon="code" onClickHandler={e => onBarBtnClicked(e, "code")} />
+            <TextBarButton icon="brackets-curly" onClickHandler={e => onBarBtnClicked(e, "link")} />
+            <TextBarButton icon="list-ul" onClickHandler={e => onBarBtnClicked(e, "list")} />
+            <TextBarButton icon="list-ol" onClickHandler={e => onBarBtnClicked(e, "list-ol")} />
+            <TextBarButton icon="camera" onClickHandler={e => onBarBtnClicked(e, "image")} />
           </div>
         </div>
 

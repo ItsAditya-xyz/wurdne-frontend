@@ -1,15 +1,16 @@
 import React from 'react'
 
-const TextBarButton = ({ icon, style }) => {
+const TextBarButton = ({ icon, style, onClickHandler }) => {
   return (
-    <button>
+    <button onClick={onClickHandler}>
         <i className={`${style} fa-${icon}`}></i>
     </button>
   )
 }
 
 TextBarButton.defaultProps = {
-    style: "fas"
+    style: "fas",
+    onClickHandler: () => {return}
 }
 
 export default TextBarButton
