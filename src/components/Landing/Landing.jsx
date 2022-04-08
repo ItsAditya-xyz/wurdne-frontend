@@ -4,9 +4,9 @@ import Navbar from "../Navbar/Navbar";
 import landingIllustration from "../../assets/landingIllustration.png";
 import revenueSvg from "../../assets/revenue.svg";
 import noAds from "../../assets/noAds.svg";
+const deso = new DeSo();
 export default function Landing() {
   const handleLogin = async () => {
-    const deso = new DeSo();
     const request = 3;
     const response = await deso.identity.login(request);
     console.log(response);
