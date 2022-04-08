@@ -39,9 +39,12 @@ body {
   @apply my-4;
 }
 
-.unreset blockquote,
 .unreset figure {
   @apply my-4 mx-10;
+}
+
+.unreset blockquote {
+  @apply border-l-8 border-gray-300 pl-6 mx-2;
 }
 
 .unreset hr {
@@ -110,4 +113,9 @@ body {
 
 .unreset pre {
   @apply my-4;
+}
+
+.unreset td,
+th {
+  @apply border border-collapse border-gray-800 p-1;
 }

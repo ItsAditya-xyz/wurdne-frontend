@@ -7,10 +7,13 @@ import rehypeHighlight from "rehype-highlight";
 import Navbar from "../Navbar/Navbar";
 import TextBarButton from "./TextBarButton";
 
+// Other Imports
+import guideText from "../Utils/GuideText";
+
 import "highlight.js/styles/atom-one-dark.css";
 
 export default function Create() {
-  const guideText = `# Guide is still a WIP!`;
+  // const guideText = `# Guide is still a WIP!`;
   const appendBodyActions = {
     H1: "# || ",
     H2: "## || ",
@@ -23,7 +26,7 @@ export default function Create() {
     embed: "%[||]",
     list: "\n- || ",
     "list-ol": "\n1. || ",
-    image: "[!||](Link)"
+    image: "![||](Link)"
   }
 
   const [titleText, setTitleText] = useState("");
