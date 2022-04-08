@@ -11,7 +11,7 @@ body {
 }
 
 .tab {
-  @apply p-4 hover:text-emerald-500 hover:border-b-emerald-500 border-b-4 duration-300 cursor-pointer;
+  @apply p-4 hover:text-emerald-500 hover:border-b-emerald-500 border-b-4 duration-300 cursor-pointer flex-grow md:flex-grow-0;
 }
 
 .tab.active {

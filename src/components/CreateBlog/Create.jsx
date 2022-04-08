@@ -110,7 +110,7 @@ export default function Create() {
     <>
       <Navbar title='Wurdne' />
 
-      <div className="mt-24 w-4/5 m-auto px-8 mb-6">
+      <div className="mt-24 w-screen md:w-4/5 m-auto px-2 md:px-8 mb-6">
         <div className="flex justify-between">
           <div className="flex gap-4">
             <button className="p-2 border-emerald-500 border rounded-md duration-300 hover:bg-emerald-500 hover:text-white" onClick={e => setCoverModalVisible(true)}>
@@ -128,9 +128,9 @@ export default function Create() {
           <textarea name="title" id="blogTitle" className="resize-none w-full rounded-md p-2 text-2xl font-bold border-transparent border no-ring focus:border-gray-300" rows="1" placeholder="Title..." value={titleText} onChange={onTitleChange} ref={titleTextArea}></textarea>
         </div>
 
-        <div className="pr-4 mt-4 flex justify-between bg-gray-200 border border-gray-300 rounded-t-lg">
-          <div className="text-views text-lg flex">
-            <div className={`tab rounded-tl-lg ${currentTab == 0 && "active"}`} onClick={() => setCurrentTab(0)}>
+        <div className="md:pr-4 mt-4 flex flex-col-reverse items-center md:flex-row md:justify-between bg-gray-200 border border-gray-300 rounded-t-lg">
+          <div className="text-views w-full md:text-lg flex">
+            <div className={`tab md:rounded-tl-lg ${currentTab == 0 && "active"}`} onClick={() => setCurrentTab(0)}>
               <i className="fas fa-pencil"></i> Write
             </div>
             <div className={`tab ${currentTab == 1 && "active"}`} onClick={() => setCurrentTab(1)}>
@@ -140,11 +140,10 @@ export default function Create() {
               <i className="fas fa-book"></i> Guide
             </div>
           </div>
-          <div className="text-btns flex gap-4">
+          <div className="text-btns flex gap-2 p-2 md:p-0 md:gap-4">
             <div className="flex items-center" onClick={e => setHeadDropOpen(!headDropOpen)}>
               <div className="inline-block relative cursor-pointer">
-                <i className="fas fa-heading mr-2"></i>
-                <i className="fas fa-chevron-down"></i>
+                <i className="fas fa-heading mr-1"></i>
 
                 <ul className={`absolute ${!headDropOpen && "hidden"}  pt-1`}>
                   <li className="">
@@ -158,6 +157,7 @@ export default function Create() {
                   </li>
                 </ul>
               </div>
+              <i className="fas fa-chevron-down"></i>
             </div>
             <TextBarButton icon="bold" onClickHandler={e => onBarBtnClicked(e, "bold")} />
             <TextBarButton icon="italic" onClickHandler={e => onBarBtnClicked(e, "italic")} />
