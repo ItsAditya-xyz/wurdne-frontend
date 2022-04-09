@@ -13,7 +13,7 @@ export default function Navbar(props) {
             className={`toggleColour ${
               props.gradient ? "text-white" : null
             } no-underline hover:no-underline font-bold text-2xl lg:text-4xl`}
-            href='#'>
+            href='/'>
             {props.title}
           </a>
         </div>
@@ -37,8 +37,8 @@ export default function Navbar(props) {
             <li className='mr-3'>
               <a
                 className='inline-block text-black no-underline hover:text-gray-800 hover:text-underline py-2 px-4'
-                href='#'>
-                link
+                href='/create'>
+                Create
               </a>
             </li>
             <li className='mr-3'>
