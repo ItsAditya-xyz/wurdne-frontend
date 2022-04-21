@@ -9,7 +9,6 @@ export default function Landing() {
   const handleLogin = async () => {
     const request = 3;
     const response = await deso.identity.login(request);
-    console.log(response);
   };
   return (
     <div className='leading-normal tracking-normal text-white gradient'>
