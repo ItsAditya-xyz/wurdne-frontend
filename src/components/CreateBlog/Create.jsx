@@ -193,7 +193,7 @@ export default function Create() {
               <i className='fas fa-book'></i> Guide
             </div>
           </div>
-          <div className='text-btns flex gap-2 p-2 md:p-0 md:gap-4'>
+          <div className='text-btns hidden md:flex gap-2 p-2 md:p-0 md:gap-4'>
             <div
               className='flex items-center'
               onClick={(e) => setHeadDropOpen(!headDropOpen)}>
