@@ -15,7 +15,6 @@ const deso = new Deso();
 export default function Create() {
   const [titleText, setTitleText] = useState("");
   const [bodyText, setBodyText] = useState("");
-  const [coverModalVisible, setCoverModalVisible] = useState(false);
   const [tagModalVisible, setTagModalVisible] = useState(false);
   const [postCover, setPostCover] = useState("");
   const [postTags, setPostTags] = useState([]);
@@ -83,16 +82,16 @@ export default function Create() {
 
       <div className='mt-24 w-screen md:w-4/5 m-auto px-2 md:px-8 mb-6'>
         <TopBtnBar
-          setCoverModalVisible={setCoverModalVisible}
           setTagModalVisible={setTagModalVisible}
           publishHandler={onPublishBtnClicked}
+          coverImgHandler={onCoverInputChange}
         />
 
         {/* Cover Image Preview */}
         
           
           <div
-            className={`cover-preview bg-center rounded-lg bg-no-repeat w-full h-96 bg-cover relative  ${
+            className={`cover-preview bg-center rounded-lg bg-no-repeat w-4/5 mx-auto h-96 bg-cover relative  ${
               !postCover && "hidden"
             }`}
             style={{ backgroundImage: `url(${postCover})` }}>
@@ -117,34 +116,10 @@ export default function Create() {
       {/* Modals */}
       <div
         className={`absolute top-0 left-0 z-30 w-screen h-screen flex justify-center items-center bg-semi-transparent ${
-          coverModalVisible || tagModalVisible || "hidden"
+          !tagModalVisible && "hidden"
         }`}>
-        <div
-          className={`bg-gray-50 rounded-lg ${!coverModalVisible && "hidden"}`}>
-          <div className='px-8 py-3 text-2xl font-bold border-b border-b-gray-300 bg-gray-300 rounded-t-lg'>
-            Set Cover Image
-          </div>
-          <div className='px-8 py-4'>
-            <input
-              type='file'
-              accept='image/png, image/jpeg'
-              onChange={onCoverInputChange}
-            />
-          </div>
-          <div className='px-8 py-3 text-xl font-bold border-t border-t-gray-300 bg-gray-300 rounded-b-lg flex justify-end gap-2'>
-            <button
-              className='px-2 py-1 text-white bg-red-600 border-red-700 hover:bg-red-700 border rounded-lg duration-300'
-              onClick={(e) => setCoverModalVisible(false)}>
-              Close
-            </button>
-            <button
-              className='px-2 py-1 text-white bg-emerald-600 border-emerald-700 hover:bg-emerald-700 border rounded-lg duration-300'
-              onClick={(e) => setCoverModalVisible(false)}>
-              Upload
-            </button>
-          </div>
-        </div>
 
+        {/* Tag Modal */}
         <div
           className={`bg-gray-50 rounded-lg ${!tagModalVisible && "hidden"}`}>
           <div className='px-8 py-3 text-2xl font-bold border-b border-b-gray-300 bg-gray-300 rounded-t-lg'>
