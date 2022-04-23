@@ -1,9 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 import TextBarButton from "./TextBarButton";
 
 const TextEditorBar = ({currentTab, setCurrentTab, onBarBtnClicked}) => {
   const [headDropOpen, setHeadDropOpen] = useState(false);
+  const imgInput = useRef();
+
+  const onImgInputChange = (e) => {
+    let rawImage = e.target.files[0];
+    onBarBtnClicked(e, "image", rawImage);
+  }
 
   return (
     <div className='md:pr-4 mt-4 flex flex-col-reverse items-center md:flex-row md:justify-between bg-gray-200 border border-gray-300 rounded-t-lg'>
@@ -82,10 +88,10 @@ const TextEditorBar = ({currentTab, setCurrentTab, onBarBtnClicked}) => {
               icon='list-ol'
               onClickHandler={(e) => onBarBtnClicked(e, "list-ol")}
             />
-            <TextBarButton
-              icon='camera'
-              onClickHandler={(e) => onBarBtnClicked(e, "image")}
-            />
+            <button onClick={(e) => imgInput.current.click()}>
+              <i className={`fas fa-camera`}></i>
+              <input type="file" id="uploadImgToolbar" accept="image/png, image/jpeg" className="hidden" ref={imgInput} onChange={onImgInputChange} />
+            </button>
           </div>
         </div>
   )

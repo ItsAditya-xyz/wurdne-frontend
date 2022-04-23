@@ -7,7 +7,7 @@ import TextEditorBar from './TextEditorBar';
 
 import guideText from "../Utils/GuideText";
 
-const TextEditor = ({ titleText, bodyText, setTitleText, setBodyText }) => {
+const TextEditor = ({ titleText, bodyText, setTitleText, setBodyText, uploadImage }) => {
   const appendBodyActions = {
     H1: "# || ",
     H2: "## || ",
@@ -20,7 +20,7 @@ const TextEditor = ({ titleText, bodyText, setTitleText, setBodyText }) => {
     embed: "%[||]",
     list: "\n- || ",
     "list-ol": "\n1. || ",
-    image: "![||](Link)",
+    image: "![||](Loading...)",
   };
 
   const [currentTab, setCurrentTab] = useState(0); // 0: Write, 1: Preview, 2: Guide
@@ -28,7 +28,7 @@ const TextEditor = ({ titleText, bodyText, setTitleText, setBodyText }) => {
   const bodyTextArea = useRef(undefined);
 
   // Event Handlers
-  const onBarBtnClicked = (e, actionID) => {
+  const onBarBtnClicked = async (e, actionID, rawImage) => {
     // Get Selection
     let selectionStart = bodyTextArea.current.selectionStart;
     let selectionEnd = bodyTextArea.current.selectionEnd;
@@ -39,6 +39,16 @@ const TextEditor = ({ titleText, bodyText, setTitleText, setBodyText }) => {
       selectionEnd
     );
     setBodyText(outText);
+    if (actionID === "image") {
+      bodyTextArea.current.readonly = true;
+      const response = await uploadImage(rawImage);
+      console.log(response);
+      // @todo Make it more reliable and prevent from changing the image tags at other places
+      const newText = outText.replace("![](Loading...)", `![](${response.ImageURL})`);
+      setBodyText(newText);
+      console.log(newText);
+      bodyTextArea.current.readonly = false;
+    }
     bodyTextArea.current.focus();
   };
 

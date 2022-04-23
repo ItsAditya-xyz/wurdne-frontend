@@ -38,13 +38,14 @@ export default function Create() {
       setPostCover(null);
     }
     let url = URL.createObjectURL(rawImage);
-    const request = undefined;
-    const JwtToken = await deso.identity.getJwt(request);
-    const response = await da.uploadImage(
-      rawImage,
-      loggedInPublicKey,
-      JwtToken
-    );
+    // const request = undefined;
+    // const JwtToken = await deso.identity.getJwt(request);
+    // const response = await da.uploadImage(
+    //   rawImage,
+    //   loggedInPublicKey,
+    //   JwtToken
+    // );
+    const response = await uploadImage(rawImage);
     console.log(response);
     setPostCover(url);
     e.target.value = "";
@@ -75,6 +76,18 @@ export default function Create() {
     console.log("Publishing...");
     alert("Publishing...Not really");
   };
+
+  // Utilities
+  const uploadImage = async (rawImage) => {
+    const request = undefined;
+    const JwtToken = await deso.identity.getJwt(request);
+    const response = await da.uploadImage(
+      rawImage,
+      loggedInPublicKey,
+      JwtToken
+    );
+    return response;
+  }
 
   return (
     <>
@@ -110,6 +123,7 @@ export default function Create() {
           bodyText={bodyText}
           setTitleText={setTitleText}
           setBodyText={setBodyText}
+          uploadImage={uploadImage}
         />
       </div>
 
