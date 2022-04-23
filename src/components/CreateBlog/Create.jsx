@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import DesoApi from "../../tools/desoAPI";
 import Deso from "deso-protocol";
 
@@ -6,7 +6,6 @@ import Deso from "deso-protocol";
 import Navbar from "../Navbar/Navbar";
 import TopBtnBar from "./TopBtnBar";
 import TextEditor from "./TextEditor";
-
 
 import "highlight.js/styles/atom-one-dark.css";
 

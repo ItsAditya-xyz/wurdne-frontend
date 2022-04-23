@@ -3,21 +3,6 @@ import React, { useState } from 'react';
 import TextBarButton from "./TextBarButton";
 
 const TextEditorBar = ({currentTab, setCurrentTab, onBarBtnClicked}) => {
-  // const appendBodyActions = {
-  //   H1: "# || ",
-  //   H2: "## || ",
-  //   H3: "### || ",
-  //   bold: "**||**",
-  //   italic: "*||*",
-  //   quote: "\n> || ",
-  //   code: "\n```\n||```",
-  //   link: "[||](Link)",
-  //   embed: "%[||]",
-  //   list: "\n- || ",
-  //   "list-ol": "\n1. || ",
-  //   image: "![||](Link)",
-  // };
-
   const [headDropOpen, setHeadDropOpen] = useState(false);
 
   return (
