@@ -92,7 +92,7 @@ export default function Create() {
         
           
           <div
-            className={`cover-preview rounded-lg bg-no-repeat w-full h-96 bg-contain relative  ${
+            className={`cover-preview bg-center rounded-lg bg-no-repeat w-full h-96 bg-cover relative  ${
               !postCover && "hidden"
             }`}
             style={{ backgroundImage: `url(${postCover})` }}>
