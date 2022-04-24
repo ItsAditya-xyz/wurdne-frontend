@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import DesoApi from "../../tools/desoAPI";
 import Deso from "deso-protocol";
 
@@ -20,6 +20,8 @@ export default function Create() {
   const [postTags, setPostTags] = useState([]);
   const [loggedInPublicKey, setLoggedInPublicKey] = useState(null);
 
+  const tagInput = useRef();
+
   useEffect(async () => {
     const publicKey = localStorage.getItem("login_key");
     if (publicKey === undefined || publicKey === null) {
@@ -38,13 +40,6 @@ export default function Create() {
       setPostCover(null);
     }
     let url = URL.createObjectURL(rawImage);
-    // const request = undefined;
-    // const JwtToken = await deso.identity.getJwt(request);
-    // const response = await da.uploadImage(
-    //   rawImage,
-    //   loggedInPublicKey,
-    //   JwtToken
-    // );
     const response = await uploadImage(rawImage);
     console.log(response);
     setPostCover(url);
@@ -57,6 +52,10 @@ export default function Create() {
     if (text[text.length - 1] === " ") {
       let newTag = text.split(" ")[0];
       setPostTags([...postTags, newTag]);
+      if (postTags.length + 1 >= 5) {
+        tagInput.current.readOnly = true;
+      }
+      console.log(postTags.length);
       e.target.value = "";
     }
   };
@@ -68,6 +67,9 @@ export default function Create() {
       let newTags = [...postTags];
       newTags.splice(newTags.length - 1, 1);
       setPostTags(newTags);
+      if (newTags.length <= 5) {
+        tagInput.current.readOnly = false;
+      }
     }
   };
 
@@ -155,6 +157,7 @@ export default function Create() {
                 onChange={onTagInputChange}
                 onKeyDown={onInputKeyDown}
                 id='tagInput'
+                ref={tagInput}
               />
             </div>
           </div>
