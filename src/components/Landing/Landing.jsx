@@ -4,11 +4,19 @@ import Navbar from "../Navbar/Navbar";
 import landingIllustration from "../../assets/landingIllustration.png";
 import revenueSvg from "../../assets/revenue.svg";
 import noAds from "../../assets/noAds.svg";
+import { useNavigate } from "react-router-dom";
+
 const deso = new DeSo();
 export default function Landing() {
+  const navigate = useNavigate();
+
   const handleLogin = async () => {
     const request = 3;
     const response = await deso.identity.login(request);
+    if (response) {
+      //redirect to create
+      navigate("/create");
+    }
   };
   return (
     <div className='leading-normal tracking-normal text-white gradient'>
