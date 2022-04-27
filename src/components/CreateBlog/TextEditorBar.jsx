@@ -37,9 +37,10 @@ const TextEditorBar = ({currentTab, setCurrentTab, onBarBtnClicked}) => {
               <div className='inline-block relative cursor-pointer'>
                 <i className='fas fa-heading mr-1'></i>
 
-                <ul className={`absolute ${!headDropOpen && "hidden"}  pt-1`}>
+                <ul className={`absolute ${!headDropOpen && "hidden"}  pt-1 bg-slate-300 w-12 px-2 rounded-sm`}>
                   <li className=''>
                     <TextBarButton
+            
                       icon='h1'
                       onClickHandler={(e) => onBarBtnClicked(e, "H1")}
                     />
