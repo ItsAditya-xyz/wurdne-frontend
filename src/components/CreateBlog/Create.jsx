@@ -19,6 +19,8 @@ export default function Create() {
   const [postCover, setPostCover] = useState("");
   const [postTags, setPostTags] = useState([]);
   const [loggedInPublicKey, setLoggedInPublicKey] = useState(null);
+  const [isPosting, setIsPosting] = useState(false);
+  const [coverImageURL, setCoverImageURL] = useState("");
 
   const tagInput = useRef();
 
@@ -41,7 +43,9 @@ export default function Create() {
     }
     let url = URL.createObjectURL(rawImage);
     const response = await uploadImage(rawImage);
-    console.log(response);
+    if (response) {
+      setCoverImageURL(response.ImageURL);
+    }
     setPostCover(url);
     e.target.value = "";
   };
@@ -73,10 +77,37 @@ export default function Create() {
     }
   };
 
-  const onPublishBtnClicked = (e) => {
+  const onPublishBtnClicked = async (e) => {
     // Publish
+    if (isPosting) {
+      return;
+    }
+    console.log(titleText);
+    console.log(coverImageURL);
+    console.log(postTags);
+    console.log(bodyText);
+    setIsPosting(true);
     console.log("Publishing...");
-    alert("Publishing...Not really");
+    let stringTags = postTags.join(",");
+    const reqeustPayload = {
+      UpdaterPublicKeyBase58Check: loggedInPublicKey,
+      BodyObj: {
+        Body: bodyText,
+        VideoURLs: [],
+        ImageURLs: [coverImageURL],
+      },
+      PostExtraData: {
+        Title: titleText,
+        Tags: stringTags,
+      },
+    };
+
+    const response = await deso.posts.submitPost(reqeustPayload);
+    if(response){
+      const createdPostHashHex = response.PostHashHex;
+      //will redirect to the published post
+    }
+    setIsPosting(false);
   };
 
   // Utilities
@@ -89,7 +120,7 @@ export default function Create() {
       JwtToken
     );
     return response;
-  }
+  };
 
   return (
     <>
@@ -99,26 +130,25 @@ export default function Create() {
         <TopBtnBar
           setTagModalVisible={setTagModalVisible}
           publishHandler={onPublishBtnClicked}
+          isPosting={isPosting}
           coverImgHandler={onCoverInputChange}
         />
 
         {/* Cover Image Preview */}
-        
-          
-          <div
-            className={`cover-preview bg-center rounded-lg bg-no-repeat w-2/3 mx-auto h-96 bg-cover relative  ${
-              !postCover && "hidden"
-            }`}
-            style={{ backgroundImage: `url(${postCover})` }}>
-            <div className='cover-toolkit absolute top-0 right-0 m-5 flex items-center'>
-              <button
-                className='px-4 py-2 bg-red-600 text-white opacity-75 hover:opacity-100 duration-300 rounded-lg'
-                onClick={() => setPostCover(null)}>
-                <i className='fal fa-close'></i>
-              </button>
-            </div>
+
+        <div
+          className={`cover-preview bg-center rounded-lg bg-no-repeat w-2/3 mx-auto h-96 bg-cover relative  ${
+            !postCover && "hidden"
+          }`}
+          style={{ backgroundImage: `url(${postCover})` }}>
+          <div className='cover-toolkit absolute top-0 right-0 m-5 flex items-center'>
+            <button
+              className='px-4 py-2 bg-red-600 text-white opacity-75 hover:opacity-100 duration-300 rounded-lg'
+              onClick={() => setPostCover(null)}>
+              <i className='fal fa-close'></i>
+            </button>
           </div>
-  
+        </div>
 
         <TextEditor
           titleText={titleText}
@@ -134,7 +164,6 @@ export default function Create() {
         className={`absolute top-0 left-0 z-30 w-screen h-screen flex justify-center items-center bg-semi-transparent ${
           !tagModalVisible && "hidden"
         }`}>
-
         {/* Tag Modal */}
         <div
           className={`bg-gray-50 rounded-lg ${!tagModalVisible && "hidden"}`}>
