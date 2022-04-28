@@ -6,6 +6,7 @@ import Deso from "deso-protocol";
 import Navbar from "../Navbar/Navbar";
 import TopBtnBar from "./TopBtnBar";
 import TextEditor from "./TextEditor";
+import { useNavigate } from "react-router-dom";
 
 import "highlight.js/styles/atom-one-dark.css";
 
@@ -13,6 +14,7 @@ const da = new DesoApi();
 const deso = new Deso();
 
 export default function Create() {
+  const navigate = useNavigate();
   const [titleText, setTitleText] = useState("");
   const [bodyText, setBodyText] = useState("");
   const [tagModalVisible, setTagModalVisible] = useState(false);
@@ -103,9 +105,11 @@ export default function Create() {
     };
 
     const response = await deso.posts.submitPost(reqeustPayload);
+    console.log("post doneee")
+    console.log(response)
     if(response){
       const createdPostHashHex = response.PostHashHex;
-      alert("Post done")
+      navigate(`/post/${createdPostHashHex}`);
       //will redirect to the published post
     }
     setIsPosting(false);

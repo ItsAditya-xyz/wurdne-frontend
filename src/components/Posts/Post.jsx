@@ -69,7 +69,7 @@ const Post = () => {
                   className='username font-bold hover:underline'>
                   {postUsername}
                 </Link>
-                <div className='post-date italic'>{postDate}</div>
+                <div className='post-date text-sm'>{postDate}</div>
               </div>
             </div>
             <div className='text-4xl font-bold break-words my-5 mx-3'>{postTitle}</div>
