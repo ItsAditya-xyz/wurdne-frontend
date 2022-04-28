@@ -105,6 +105,7 @@ export default function Create() {
     const response = await deso.posts.submitPost(reqeustPayload);
     if(response){
       const createdPostHashHex = response.PostHashHex;
+      alert("Post done")
       //will redirect to the published post
     }
     setIsPosting(false);
