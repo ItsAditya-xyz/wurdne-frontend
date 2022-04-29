@@ -36,6 +36,10 @@ body, button, input, textarea {
   @apply bg-slate-300 rounded-md p-1 mx-1;
 }
 
+.separator {
+  @apply flex items-center text-center before:content-[''] before:flex-1 before:border-b before:border-b-slate-700 after:content-[''] after:flex-1 after:border-b after:border-b-slate-700 before:mr-7 after:ml-7 w-4/5 mx-auto md:w-full;
+}
+
 .post-content img {
   @apply mx-auto rounded-lg;
 }
