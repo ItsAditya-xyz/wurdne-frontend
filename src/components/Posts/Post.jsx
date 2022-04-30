@@ -21,6 +21,7 @@ const Post = () => {
   const [postDate, setPostDate] = useState(null);
   const [postCover, setPostCover] = useState(null);
   const [postBody, setPostBody] = useState(null);
+  const [postStats, setPostStats] = useState([]); // [diamonds, likes, comments]
 
   const commentElement = useRef();
 
@@ -40,7 +41,7 @@ const Post = () => {
     setPostCover(postData.ImageURLs[0]);
     setPostUserName(postData.ProfileEntryResponse.Username);
     setPostTitle(postData.PostExtraData.Title || "Post Title");
-
+    setPostStats([postData.DiamondCount, postData.LikeCount, postData.CommentCount]);
 
     const timestamp = postData.TimestampNanos;
     setPostDate(
@@ -112,7 +113,7 @@ const Post = () => {
               <div className="title text-2xl font-bold separator">Comments</div>
             </div>
 
-            <StickyActionWidget commentEl={commentElement} />
+            <StickyActionWidget hash={hash} diamonds={postStats[0]} likes={postStats[1]} comments={postStats[2]} commentEl={commentElement} />
           </div>
         )}
       </div>

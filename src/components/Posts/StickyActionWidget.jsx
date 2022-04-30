@@ -1,7 +1,12 @@
-import { comment } from 'postcss';
-import React from 'react';
+import React, { useEffect } from 'react';
+import Deso from "deso-protocol";
 
-const StickyActionWidget = ({ diamonds, likes, comments, commentEl }) => {
+const StickyActionWidget = ({ hash, diamonds, likes, comments, commentEl }) => {
+  const deso = new Deso();
+
+  useEffect(() => {
+
+  }, []);
 
   const diamondHandler = () => {
     // Give diamonds
