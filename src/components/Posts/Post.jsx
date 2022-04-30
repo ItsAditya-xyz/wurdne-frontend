@@ -69,7 +69,7 @@ const Post = () => {
                 </div>
                 <div className='user-text flex flex-col justify-center p-2 text-gray-800'>
                   <Link
-                    to={`/users/${postUsername}`}
+                    to={`/u/${postUsername}`}
                     className='username font-bold hover:underline'>
                     {postUsername}
                   </Link>
