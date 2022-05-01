@@ -59,7 +59,7 @@ export default function Edit() {
       }
       setPostCover(imgURL);
       setPostTags(postData.PostExtraData.Tags.split(" "));
-
+      setCoverImageURL(imgURL)
       setIsloading(false);
     }
   }, []);
