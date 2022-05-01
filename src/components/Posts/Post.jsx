@@ -30,12 +30,12 @@ const Post = () => {
     const deso = new Deso();
 
     const response = await deso.posts.getSinglePost({ PostHashHex: hash });
-    if (response.status != 200) {
+    if (!response.PostFound) {
       console.log("An Error Occured!");
       return;
     }
 
-    const postData = response.data.PostFound;
+    const postData = response.PostFound;
     setPosterKey(postData.PosterPublicKeyBase58Check);
     setPostBody(postData.Body);
     setPostCover(postData.ImageURLs[0]);

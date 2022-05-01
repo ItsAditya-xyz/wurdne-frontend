@@ -8,11 +8,13 @@ export default function Profile() {
   console.log(userName);
   const [isLoading, setIsLoading] = useState(true);
   const [profileData, setProfileData] = useState(null);
+  const [blogsByUser, setBlogsByUser] = useState(null)
   const deso = new Deso();
   useEffect(async () => {
     try {
       const response = await deso.user.getSingleProfile({ Username: userName });
       setProfileData(response);
+      const publicKeyOfUser = response.Profile.PublicKeyBase58Check;
     } catch (e) {
       console.log(e);
     } finally {
