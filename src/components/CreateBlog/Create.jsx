@@ -6,7 +6,7 @@ import Deso from "deso-protocol";
 import Navbar from "../Navbar/Navbar";
 import TopBtnBar from "./TopBtnBar";
 import TextEditor from "./TextEditor";
-import { useNavigate } from "react-router-dom";
+import { useNavigate  } from "react-router-dom";
 
 import "highlight.js/styles/atom-one-dark.css";
 
