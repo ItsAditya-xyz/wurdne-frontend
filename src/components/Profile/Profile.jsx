@@ -67,8 +67,10 @@ export default function Profile() {
 
           {blogsByUser.map((item) => {
             return (
-              <div className='my-32' key={item.postHashHex}>
-                {item.postHashHex}
+              <div className='my-10 ' key={item.PostHashHex}>
+                <Link to={`/post/${item.postHashHex}`} className='hover:underline'>
+                  {item.postHashHex}
+                </Link>
               </div>
             );
           })}
