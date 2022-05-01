@@ -62,7 +62,7 @@ const Post = () => {
     <>
       <Navbar title='Wurdne' />
 
-      <div className='mt-24 mx-auto md:w-5/6 px-2 md:px-8'>
+      <div className='mt-24 mx-auto md:w-3/4 px-4 md:px-16'>
         {isLoading ? (<Loader/>) : (
           <div>
             <div className='post-head'>
@@ -95,7 +95,7 @@ const Post = () => {
             </div>
 
             <ReactMarkdown
-              className='post-content text-xl break-words unreset'
+              className='post-content text-lg font  break-words unreset'
               rehypePlugins={[rehypeHighlight]}
               remarkPlugins={[remarkGfm]}>
               {postBody}
