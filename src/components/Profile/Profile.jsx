@@ -3,18 +3,25 @@ import { Link, useParams } from "react-router-dom";
 import Deso from "deso-protocol";
 import Navbar from "../Navbar/Navbar";
 import Loader from "../../components/Utils/Loader";
+import DesoApi from "../../tools/desoAPI";
 export default function Profile() {
   const { userName } = useParams();
   console.log(userName);
   const [isLoading, setIsLoading] = useState(true);
   const [profileData, setProfileData] = useState(null);
-  const [blogsByUser, setBlogsByUser] = useState(null)
+  const [blogsByUser, setBlogsByUser] = useState([]);
+
   const deso = new Deso();
+  const desoAPI = new DesoApi();
   useEffect(async () => {
     try {
       const response = await deso.user.getSingleProfile({ Username: userName });
       setProfileData(response);
       const publicKeyOfUser = response.Profile.PublicKeyBase58Check;
+      const blogByUserResponse = await desoAPI.getBlogsByPublicKey(
+        publicKeyOfUser
+      );
+      setBlogsByUser(blogByUserResponse.postsFound);
     } catch (e) {
       console.log(e);
     } finally {
@@ -57,6 +64,14 @@ export default function Profile() {
               </div>
             </div>
           </div>
+
+          {blogsByUser.map((item) => {
+            return (
+              <div className='my-32' key={item.postHashHex}>
+                {item.postHashHex}
+              </div>
+            );
+          })}
         </div>
       )}
     </>
