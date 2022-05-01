@@ -38,7 +38,14 @@ const Post = () => {
     const postData = response.PostFound;
     setPosterKey(postData.PosterPublicKeyBase58Check);
     setPostBody(postData.Body);
-    setPostCover(postData.ImageURLs[0]);
+    let imgURL = ""
+    try{
+      imgURL = postData.ImageURLs[0];
+    }
+    catch(e){
+      imgURL = "";
+    }
+    setPostCover(imgURL);
     setPostUserName(postData.ProfileEntryResponse.Username);
     setPostTitle(postData.PostExtraData.Title || "Post Title");
     setPostStats([postData.DiamondCount, postData.LikeCount, postData.CommentCount]);
