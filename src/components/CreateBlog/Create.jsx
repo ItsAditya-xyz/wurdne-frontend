@@ -115,7 +115,7 @@ export default function Create() {
         loggedInPublicKey,
         titleText,
         createdPostHashHex,
-        stringTags,
+        stringTags.toLowerCase(),
         response.TstampNanos,
         userJwt
       );
