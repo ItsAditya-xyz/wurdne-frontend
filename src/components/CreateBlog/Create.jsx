@@ -90,7 +90,7 @@ export default function Create() {
     console.log(bodyText);
     setIsPosting(true);
     console.log("Publishing...");
-    let stringTags = postTags.join(",");
+    let stringTags = postTags.join(" ");
     const reqeustPayload = {
       UpdaterPublicKeyBase58Check: loggedInPublicKey,
       BodyObj: {
@@ -105,10 +105,21 @@ export default function Create() {
     };
 
     const response = await deso.posts.submitPost(reqeustPayload);
-    console.log("post doneee")
-    console.log(response)
-    if(response){
+
+    console.log("post doneee");
+    console.log(response);
+    if (response) {
       const createdPostHashHex = response.PostHashHex;
+      const userJwt = await  deso.identity.getJwt(undefined);
+      const backendSubmitResponse = await da.submitBlog(
+        loggedInPublicKey,
+        titleText,
+        createdPostHashHex,
+        stringTags,
+        response.TstampNanos,
+        userJwt
+      );
+      console.log(backendSubmitResponse)
       navigate(`/post/${createdPostHashHex}`);
       //will redirect to the published post
     }
