@@ -86,6 +86,10 @@ export default function Create() {
     }
     console.log(titleText);
     console.log(coverImageURL);
+    let bannerList = []
+    if(coverImageURL!= ""){
+      bannerList.push(coverImageURL)
+    }
     console.log(postTags);
     console.log(bodyText);
     setIsPosting(true);
@@ -96,7 +100,7 @@ export default function Create() {
       BodyObj: {
         Body: bodyText,
         VideoURLs: [],
-        ImageURLs: [coverImageURL],
+        ImageURLs: bannerList,
       },
       PostExtraData: {
         Title: titleText,

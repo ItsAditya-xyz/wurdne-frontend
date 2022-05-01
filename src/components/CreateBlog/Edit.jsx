@@ -115,6 +115,10 @@ export default function Edit() {
     console.log(coverImageURL);
     console.log(postTags);
     console.log(bodyText);
+    let bannerList = []
+    if(coverImageURL!= ""){
+      bannerList.push(coverImageURL)
+    }
     setIsPosting(true);
     console.log("Updating...");
     let stringTags = postTags.join(" ");
@@ -123,7 +127,7 @@ export default function Edit() {
       BodyObj: {
         Body: bodyText,
         VideoURLs: [],
-        ImageURLs: [coverImageURL],
+        ImageURLs: bannerList,
       },
       PostExtraData: {
         Title: titleText,
